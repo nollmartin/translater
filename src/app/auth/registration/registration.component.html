@@ -30,6 +30,19 @@
               megadni.</span>
           </ng-container>
         </mat-form-field>
+        <mat-form-field>
+          <mat-label>
+            Telefonszám (+36-00-000-0000)
+          </mat-label>
+          <input matInput placeholder="Telefonszám (+36-00-000-0000)" id="tel" formControlName="tel">
+          <br>
+          <ng-container
+            *ngIf="contactForm.get('tel')?.invalid && (contactForm.get('tel')?.dirty || contactForm.get('ntelame')?.touched)">
+            <span class="error-message" *ngIf="contactForm.get('tel')?.errors?.['required']">Telefonszámot kötelező
+              megadni.</span>
+            <span class="error-message" *ngIf="contactForm.get('tel')?.errors?.['pattern']">Hibás telefonszám</span>
+          </ng-container>
+        </mat-form-field>
       </div>
     </mat-card-content>
 

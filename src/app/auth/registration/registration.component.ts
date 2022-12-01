@@ -14,10 +14,15 @@ export class RegistrationComponent implements OnInit {
   dataPolicy: boolean = false;
   contactForm: FormGroup;
   disabled = false;
+  tel: string = '';
 
   constructor(private authService: AuthService) {
     this.contactForm = new FormGroup({
       name: new FormControl('', Validators.required),
+      tel: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^((\\+36-?)|0)?[0-9]{2}[-]?[0-9]{3}[-]?[0-9]{4}$'),
+      ]),
       email: new FormControl('', [Validators.required, Validators.email]),
       dataPolicy: new FormControl(false, Validators.requiredTrue),
     });
@@ -29,7 +34,8 @@ export class RegistrationComponent implements OnInit {
     const user = new User(
       this.contactForm.value.name,
       this.contactForm.value.email,
-      true
+      this.contactForm.value.dataPolicy,
+      this.contactForm.value.tel
     );
     this.authService.registration(user);
   }
