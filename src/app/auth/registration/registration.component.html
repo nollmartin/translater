@@ -1,0 +1,41 @@
+<form [formGroup]="contactForm" (ngSubmit)="submitted()">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Regisztráció</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="registrationform">
+        <mat-form-field>
+          <mat-label>
+            E-mail
+          </mat-label>
+          <p>
+          <input matInput placeholder="Email" id="email" formControlName="email">
+          <br>
+          <ng-container
+            *ngIf="contactForm.get('email')?.invalid && (contactForm.get('email')?.dirty || contactForm.get('email')?.touched)">
+            <span class="error-message" *ngIf="contactForm.get('email')?.errors?.['required']">E-mail címet kötelező megadni.</span>
+          </ng-container>
+          </p>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>
+            Név
+          </mat-label>
+          <input matInput placeholder="Név" id="name" formControlName="name">
+          <br>
+          <ng-container
+            *ngIf="contactForm.get('name')?.invalid && (contactForm.get('name')?.dirty || contactForm.get('name')?.touched)">
+            <span class="error-message" *ngIf="contactForm.get('name')?.errors?.['required']">Nevet kötelező
+              megadni.</span>
+          </ng-container>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+
+    <mat-checkbox class="example-margin" id="dataPolicy" formControlName="dataPolicy">A felhasználási feltételeket elfogadom.</mat-checkbox>
+    <mat-card-actions align="end">
+      <button mat-button [disabled]="contactForm.invalid">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

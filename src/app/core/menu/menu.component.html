@@ -1,0 +1,10 @@
+<mat-toolbar>
+  <div>
+    <span>Fordítógép</span>
+  </div>
+  <div class="user">
+    <div *ngIf="isLoggedIn" >
+      <mat-icon class="mat-18">person</mat-icon> {{name}}
+    </div>
+  </div>
+</mat-toolbar>
