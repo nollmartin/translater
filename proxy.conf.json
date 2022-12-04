@@ -4,5 +4,17 @@
     "secure": true,
     "changeOrigin": true,
     "logLevel": "debug"
+  },
+  "/languages": {
+    "target": "https://libretranslate.de",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/detect": {
+    "target": "https://libretranslate.de",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug"
   }
 }

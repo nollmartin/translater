@@ -1,0 +1,58 @@
+<form [formGroup]="transForm" (ngSubmit)="submitted()">
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Fordítás</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="transform">
+      <mat-form-field>
+        <mat-label>
+          Miről fordítsunk: {{language}}
+        </mat-label>
+        <p>
+          <mat-select formControlName="source">
+            <mat-option *ngFor="let lang of langs; let i = index" value="{{lang.code}}">{{lang.name}}</mat-option>
+            <mat-option value="detect">Nyelv felismerése</mat-option>
+          </mat-select>
+          <br>
+          <ng-container
+            *ngIf="transForm.get('source')?.invalid && (transForm.get('source')?.dirty || transForm.get('source')?.touched)">
+            <span class="error-message" *ngIf="transForm.get('source')?.errors?.['required']">A forrás nyelvet kötelező megadni</span>
+          </ng-container>
+        </p>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>
+          Mire fordítsuk:
+        </mat-label>
+        <p>
+          <mat-select formControlName="target">
+            <mat-option *ngFor="let lang of langs; let i = index" value="{{lang.code}}">{{lang.name}}</mat-option>
+          </mat-select>
+        </p>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>
+          A fordítandó szöveg:
+        </mat-label>
+        <p>
+          <input matInput placeholder="" id="transText" formControlName="transText">
+        </p>
+
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>
+          A fordítás:
+        </mat-label>
+        <p>
+          <input matInput placeholder="" id="transedText" formControlName="transedText" value="{{transedText}}">
+        </p>
+      </mat-form-field>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-button [disabled]="transForm.invalid">Fordít</button>
+  </mat-card-actions>
+</mat-card>
+</form>
