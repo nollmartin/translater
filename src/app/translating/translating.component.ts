@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { disableDebugTools } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { Language } from './models/language.model';
 import { TranslatingService } from './translating.service';
 
@@ -17,7 +18,11 @@ export class TranslatingComponent implements OnInit {
   transText: string = '';
   transedText: string = '';
   language: string = '';
-  constructor(private translatingService: TranslatingService) {
+
+  constructor(
+    private translatingService: TranslatingService,
+    private router: Router
+  ) {
     this.translatingService
       .getLanguages()
       .subscribe((langs) => (this.langs = langs));
@@ -50,6 +55,9 @@ export class TranslatingComponent implements OnInit {
   }
 
   private translate(_source: string) {
+    if (!this.translatingService.counterOver()) {
+      this.router.navigateByUrl('registration');
+    }
     this.translatingService
       .translate(
         this.transForm.value.transText,
@@ -60,6 +68,7 @@ export class TranslatingComponent implements OnInit {
         (response) => {
           this.transedText = JSON.parse(response).translatedText;
           this.language = _source;
+          this.translatingService.raiseCount();
         },
         (error) => {
           alert(`${JSON.parse(error.error).error}`);

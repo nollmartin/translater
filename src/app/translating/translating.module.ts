@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatingComponent } from './translating.component';
 import { MatSelectModule } from '@angular/material/select';
+import { TranslatingService } from './translating.service';
 
 @NgModule({
   declarations: [TranslatingComponent],

@@ -1,15 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { map, pipe } from 'rxjs';
+import { BehaviorSubject, map, pipe } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 import { Language } from './models/language.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TranslatingService {
-  private message: Object | undefined;
-  constructor(private http: HttpClient, private router: Router) {}
+  private _counter: number = 0;
+
+  constructor(private http: HttpClient, private authService: AuthService) {
+    const counter = localStorage.getItem('counter');
+    if (counter) {
+      this._counter = JSON.parse(counter);
+    } else {
+      localStorage.setItem('counter', JSON.stringify(this._counter));
+    }
+  }
 
   translate(q: string, source: string, target: string) {
     var formData = new FormData();
@@ -29,5 +38,19 @@ export class TranslatingService {
     formData.append('q', textBody);
     formData.append('api_key', '');
     return this.http.post(`/detect`, formData, { responseType: 'text' });
+  }
+
+  counterOver() {
+    if (!this.authService.isLoggedIn()) {
+      if (this._counter > 3) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  raiseCount() {
+    this._counter++;
+    localStorage.setItem('counter', JSON.stringify(this._counter));
   }
 }
