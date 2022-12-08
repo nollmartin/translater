@@ -42,7 +42,7 @@ export class TranslatingService {
 
   counterOver() {
     if (!this.authService.isLoggedIn()) {
-      if (this._counter > 3) {
+      if (this._counter > 2) {
         return false;
       }
     }

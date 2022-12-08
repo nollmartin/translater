@@ -18,14 +18,17 @@ export class TranslatingComponent implements OnInit {
   transText: string = '';
   transedText: string = '';
   language: string = '';
+  isLoading = false;
 
   constructor(
     private translatingService: TranslatingService,
     private router: Router
   ) {
-    this.translatingService
-      .getLanguages()
-      .subscribe((langs) => (this.langs = langs));
+    this.isLoading = true;
+    this.translatingService.getLanguages().subscribe((langs) => {
+      this.langs = langs;
+      this.isLoading = false;
+    });
 
     this.transForm = new FormGroup({
       source: new FormControl('detect'),
@@ -38,6 +41,7 @@ export class TranslatingComponent implements OnInit {
   ngOnInit(): void {}
 
   submitted() {
+    this.isLoading = true;
     if (this.transForm.value.source == 'detect') {
       this.translatingService
         .getDetect(this.transForm.value.transText)
@@ -47,6 +51,7 @@ export class TranslatingComponent implements OnInit {
           },
           (error) => {
             alert(`${JSON.parse(error)[0].error}`);
+            this.isLoading = false;
           }
         );
     } else {
@@ -56,6 +61,7 @@ export class TranslatingComponent implements OnInit {
 
   private translate(_source: string) {
     if (!this.translatingService.counterOver()) {
+      this.isLoading = false;
       this.router.navigateByUrl('registration');
     }
     this.translatingService
@@ -69,9 +75,11 @@ export class TranslatingComponent implements OnInit {
           this.transedText = JSON.parse(response).translatedText;
           this.language = _source;
           this.translatingService.raiseCount();
+          this.isLoading = false;
         },
         (error) => {
           alert(`${JSON.parse(error.error).error}`);
+          this.isLoading = false;
         }
       );
   }

@@ -52,7 +52,8 @@
   </mat-card-content>
 
   <mat-card-actions align="end">
-    <button mat-button [disabled]="transForm.invalid">Fordít</button>
+    <mat-spinner diameter="30" *ngIf="isLoading"></mat-spinner>
+    <button mat-button [disabled]="transForm.invalid || isLoading">Fordít</button>
   </mat-card-actions>
 </mat-card>
 </form>
