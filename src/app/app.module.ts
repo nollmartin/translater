@@ -9,7 +9,6 @@ import { AuthModule } from './auth/auth.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { TranslatingComponent } from './translating/translating.component';
 import { TranslatingModule } from './translating/translating.module';
 
 @NgModule({
